@@ -1,46 +1,96 @@
 buildscript {
     repositories {
+        mavenLocal()
         jcenter()
+    }
+    dependencies {
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.1.1"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0"
     }
 }
 
 plugins {
-    id "com.jfrog.bintray" version "1.7"
+    id "com.jfrog.bintray" version "1.7.3"
+    id 'java'
+    id 'maven-publish'
 }
 
-group 'com.tomorth'
-version '1.0'
-
-allprojects {
-    repositories {
-        jcenter()
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_API_KEY')
+    publications = ['MyPublication']
+    configurations = ['archives']
+    pkg {
+        repo = 'Commander'
+        name = 'Commander'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/TomOrth/Commander.git'
+        version {
+            name = '1.0'
+            desc = 'Annotation based command line parser'
+            released = new Date()
+            vcsTag = '1.0.0'
+            attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+        }
     }
-    apply plugin: 'java'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT"
+            url "https://opensource.org/licenses/MIT"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "tomorth"
+            name "Tom Orth"
+            email "torth212@gmail.com"
+        }
+    }
+
+    scm {
+        url "https://github.com/TomOrth/Commander.git"
+    }
+}
+
+// Create the publication with the pom configuration:
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            groupId 'com.tomorth'
+            artifactId 'commander'
+            version '1.0'
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Annotation based command line parser')
+                root.appendNode('name', 'Commander')
+                root.appendNode('url', 'https://github.com/TomOrth/Commander')
+                root.children().last() + pomConfig
+            }
+        }
+    }
+}
+
+repositories {
+    jcenter()
 }
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
-
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
-    configurations = ['archives']
-    pkg {
-        repo = 'Commander'
-        name = 'Commander'
-        userOrg = user
-        licenses = ['MIT']
-        vcsUrl = 'https://github.com/TomOrth/Commander.git'
-        version {
-            name = '1.0'
-            desc = 'Annotation based command line parsing library'
-            vcsTag = '1.0.0'
-        }
-    }
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.4'
-}
-
