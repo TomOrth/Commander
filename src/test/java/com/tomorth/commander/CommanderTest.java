@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 
 public class CommanderTest {
     ByteArrayOutputStream bo;
-    
+
     @Before
     public void setup() {
         bo = new ByteArrayOutputStream();
