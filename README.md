@@ -1,4 +1,5 @@
 # Commander
+![travis](https://travis-ci.org/TomOrth/Commander.svg?branch=master)
 Annotation based command line parser
 
 ## Setup
