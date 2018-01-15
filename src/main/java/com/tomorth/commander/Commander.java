@@ -8,10 +8,23 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.*;
 
+/**
+ * Main entry point for the Commander library
+ */
 public class Commander {
+
+    /**
+     * Private constructor to prevent generation of the public constructor
+     */
     private Commander() {
         throw new IllegalStateException("Utility Class");
     }
+
+    /**
+     * Method that allows for parsing of a class c with the set of command line args
+     * @param c The class being parsed
+     * @param args The args from the command line
+     */
     public static void parse(Class c, String[] args) {
         if (c.getAnnotation(CommandSet.class) != null) {
             methodParse(c, args);
@@ -20,6 +33,12 @@ public class Commander {
             throw new IllegalStateException("Class must have the CommandSet annotation in order to run");
         }
     }
+
+    /**
+     * Private internal method to perform parsing once the class c has been verified to have {@link com.tomorth.commander.annotations.CommandSet} annotation
+     * @param c The class being parsed
+     * @param args The args from the command line
+     */
     private static void methodParse(Class c, String[] args) {
         List<String> argList = Arrays.asList(args);
         Map<String, Method> methods = methodMap(c);
@@ -42,7 +61,6 @@ public class Commander {
                            }
                        }
                        else {
-                           Class type = params[0].getType();
                            paramValues.add(args[i+j+1]);
                            ++i;
                        }
@@ -54,7 +72,6 @@ public class Commander {
                 } catch (InstantiationException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
-                    System.err.println("PARAM: " + paramValues.size());
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
@@ -63,6 +80,11 @@ public class Commander {
         }
     }
 
+    /**
+     * Maps all the methods in the Class c to its string name
+     * @param c The class with the methods
+     * @return A Map where the class methods are mapped to a string key
+     */
     private static Map<String, Method> methodMap(Class c) {
         Map<String, Method> methods = new HashMap<>();
         for (Method m : c.getDeclaredMethods()) {
@@ -71,9 +93,16 @@ public class Commander {
         return methods;
     }
 
+    /**
+     * Helper method to build a List parameter for an invoked method
+     * @param methods Map of the methods to check when to stop building
+     * @param args The command line args
+     * @param i The iterator count for the loop
+     * @return A List object for an invoked method
+     */
     private static List<Object> buildList(Map<String, Method> methods, String[] args, int i) {
         List<Object> objList = new ArrayList<>();
-        String temp = "";
+        String temp;
         for (; i < args.length; ++i) {
             temp = args[i];
             if (temp.startsWith("--")) {
