@@ -48,6 +48,10 @@ task sourcesJar(type: Jar, dependsOn: classes) {
     from sourceSets.main.allSource
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.5'
+}
+
 def pomConfig = {
     licenses {
         license {
