@@ -1,4 +1,4 @@
-package com.tomorth.commander;
+package com.tomorth.commander.commandsets;
 
 import com.tomorth.commander.annotations.Command;
 

@@ -1,5 +1,7 @@
 package com.tomorth.commander;
 
+import com.tomorth.commander.commandsets.CommandModel;
+import com.tomorth.commander.commandsets.MalformedCommandSet;
 import org.junit.Before;
 import org.junit.Test;
 
