@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.tomorth.commander.CommanderTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2018-01-15T05:50:37" hostname="LAPTOP-EUGO59A7" time="0.009">
+  <properties/>
+  <testcase name="testCommandSetException" classname="com.tomorth.commander.CommanderTest" time="0.002"/>
+  <testcase name="testCommandExecutionComplex" classname="com.tomorth.commander.CommanderTest" time="0.007"/>
+  <testcase name="testCommandListException" classname="com.tomorth.commander.CommanderTest" time="0.0"/>
+  <testcase name="testCommandExecutionList" classname="com.tomorth.commander.CommanderTest" time="0.0"/>
+  <testcase name="testCommandExecution" classname="com.tomorth.commander.CommanderTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
