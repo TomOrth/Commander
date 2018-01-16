@@ -4,14 +4,8 @@
 Annotation based command line parser
 
 ## Setup
-In order to use this library, add `jitpack.io` to the `build.gradle`:
-```gradle
-repositories {
-    ...
-    maven { url 'https://jitpack.io' }
-    ...
-}
-```
+Commander is available via jCenter, so please add the `jcenter()` function to your `build.gradle` file
+ 
 Then add the library to dependencies:
 ```gradle
 dependencies {
