@@ -67,3 +67,6 @@ This will result in printing to the terminal "Hello"
 ## Additional Notes
 * Any parameter for a method of type `List` must be the last parameter
 * Please see [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines
+
+## Licensing
+This software is available under the MIT License.
